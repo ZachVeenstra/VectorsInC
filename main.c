@@ -22,4 +22,6 @@ int main(int argc, char** argv){
 	lv_append(lv2, "says ");
 	lv_append(lv2, "hi!");
 	printf("%s\n", (char*)lv_get(lv2, 0));
+    lv_cleanup(lv);
+    lv_cleanup(lv2);
 }

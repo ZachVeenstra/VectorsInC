@@ -50,7 +50,7 @@ void test_get(void){
 	TEST_CHECK( !strcmp(lv_get(lv, 1), "W. "));
 	TEST_CHECK( !strcmp(lv_get(lv, 2), "says "));
 	TEST_CHECK( !strcmp(lv_get(lv, 3), "hi!"));
-	TEST_CHECK( strcmp(lv_get(lv, 0), "Mr. \n"));
+    TEST_CHECK( strcmp(lv_get(lv, 0), "Mr. \n"));
 }
 
 void test_remove(void){

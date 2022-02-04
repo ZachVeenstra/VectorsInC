@@ -7,9 +7,9 @@ lite_vector* lv_new_vec(size_t type_size){
     lite_vector* vector = malloc(sizeof(lite_vector)); //allocate memory for the vector
     if (vector != NULL) { //if malloc did not error
         vector->length = 0; //the vector doesn't have any elements, so length is 0
-        vector->max_capacity = 100; //an arbitrary amount
+        vector->max_capacity = 10; //an arbitrary amount
         vector->type_size = type_size; //an uneccassary variable to confuse us
-        vector->data = malloc(sizeof(vector->data) * vector->max_capacity); //allocate enough memory for the max capacity
+        vector->data = malloc(sizeof(*vector->data) * vector->max_capacity); //allocate enough memory for the max capacity
     }
     return vector; //returns the vector, or NULL if malloc failed
 }
@@ -30,12 +30,13 @@ bool lv_clear(lite_vector* vec){
     if (vec != NULL) { //if the vector is accessible
         vec->length = 0; //reset length
         vec->max_capacity = 100; //reset capacity
-        void** temp = malloc(sizeof(temp) * vec->max_capacity);
+        void** temp = malloc(sizeof(*temp) * vec->max_capacity);
         if (temp != NULL) { //if malloc allocated new memory
             free(vec->data); //free the original data in vector
             vec->data = temp; //use new allocated memory
             return true; //success
         }
+        free(temp);
     }
     return false; //the vector wasn't accessible or malloc errored
 }
@@ -58,8 +59,8 @@ void* lv_get(lite_vector* vec, size_t index){
  * must remain unaffected.
  */
 static bool lv_resize(lite_vector* vec){
-    vec->max_capacity *= 0.67; //makes the capacity ~2/3 larger
-    void** temp = malloc(sizeof(temp) * vec->max_capacity); //create a new, larger space of memory
+    vec->max_capacity *= 1.67; //makes the capacity ~2/3 larger
+    void** temp = malloc(sizeof(*temp) * vec->max_capacity); //create a new, larger space of memory
     if (temp != NULL) { //if malloc allocated new memory,
         for (int i=0;i<vec->length;++i) { //loop over the vector
             temp[i] = vec->data[i]; //and put the data into the larger memory space
@@ -67,8 +68,8 @@ static bool lv_resize(lite_vector* vec){
                 return false; //the data wasn't copied`
             }
         }
-        free(vec->data); //free the original data
-        vec->data = temp; //use the new, larger capicity data
+        free(vec->data);
+        vec->data = temp; //use the new, larger capacity data
         return true;
     }
     return false;
