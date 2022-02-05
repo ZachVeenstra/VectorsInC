@@ -67,7 +67,7 @@ void lv_cleanup(lite_vector* vec);
  * Clear the contents of the vector and reset it to a default state.
  *
  * @param vec The address of the vector we wish to clear.
- * @retun Sends true on success, or false otherwise.
+ * @return Sends true on success, or false otherwise.
  */
 bool lv_clear(lite_vector* vec);
 
