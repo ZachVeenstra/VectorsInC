@@ -6,18 +6,20 @@
 
 /**
  * This is meant to check if a vector is valid or not, so that a
- * function will know how to handle a NULL pointer.
+ * function will know how to handle an invalid parameter. Setting
+ * it as static essentially makes it private, since the user doesn't 
+ * need to use it.
  * 
  * @param vec The address of the vector we wish to retrieve from.
  * @return true if the vector is valid
  * @return false if the vector is invalid
  */
 static bool isValid(lite_vector* vec) {
-    return vec != NULL;
+    return vec != NULL; // true if the vector is valid
 }
 
 
-lite_vector* lv_new_vec(size_t type_size){
+lite_vector* lv_new_vec(size_t type_size) {
     
     // allocate memory for the vector
     lite_vector* vector = malloc(sizeof(*vector));
@@ -42,7 +44,7 @@ lite_vector* lv_new_vec(size_t type_size){
 }
 
 
-void lv_cleanup(lite_vector* vec){
+void lv_cleanup(lite_vector* vec) {
     if (isValid(vec)) {
         free(vec->data); // free the data in the vector
         free(vec); // let the vector go, it is in a better place now ;_;
@@ -50,7 +52,7 @@ void lv_cleanup(lite_vector* vec){
 }
 
 
-size_t lv_get_length(lite_vector* vec){
+size_t lv_get_length(lite_vector* vec) {
 
     size_t result = 0; // set to 0, in case vec isn't accessible
     
@@ -62,7 +64,7 @@ size_t lv_get_length(lite_vector* vec){
 }
 
 
-bool lv_clear(lite_vector* vec){
+bool lv_clear(lite_vector* vec) {
  
     bool result = false;
 
@@ -85,7 +87,7 @@ bool lv_clear(lite_vector* vec){
 }
 
 
-void* lv_get(lite_vector* vec, size_t index){
+void* lv_get(lite_vector* vec, size_t index) {
 
     void* result = NULL;
 
@@ -110,7 +112,7 @@ void* lv_get(lite_vector* vec, size_t index){
  * fails.  If the resize cannot complete, the original vector
  * must remain unaffected.
  */
-static bool lv_resize(lite_vector* vec){
+static bool lv_resize(lite_vector* vec) {
 
     bool result = false;
 
@@ -137,7 +139,7 @@ static bool lv_resize(lite_vector* vec){
 }
 
 
-bool lv_append(lite_vector* vec, void* element){
+bool lv_append(lite_vector* vec, void* element) {
     
     bool result = false;
 
@@ -149,6 +151,7 @@ bool lv_append(lite_vector* vec, void* element){
             vec->length++; // and increment the length
             result = true; // success
         }
+        
         // if the vector is full
         else { 
             // if the vector was resized
